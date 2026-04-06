@@ -1,25 +1,22 @@
-class NumMatrix {
+class Solution {
 public:
-    vector<vector<int>> mat;
-    NumMatrix(vector<vector<int>>& matrix) {
-        mat = matrix;
-    }
- 
-    int sumRegion(int row1, int col1, int row2, int col2) {
-        int sum = 0;
-        for(int i=row1;i<=row2;i++)
+    bool isValidSudoku(vector<vector<char>>& board) {
+        set<pair<int, char>> row, col, box;
+
+        for(int i=0;i<9;i++)
         {
-            for(int j = col1;j<=col2;j++)
+            for(int j =0 ;j<9;j++)
             {
-                sum += mat[i][j];
+                if(board[i][j] == '.')
+                {
+                    continue;
+                }
+                if(!row.insert({i, board[i][j]}).second || !col.insert({j, board[i][j]}).second || !box.insert({((i/3)*3 + j/3), board[i][j]}).second)
+                {
+                    return false;
+                }
             }
         }
-        return sum;
+        return true;
     }
 };
-
-/**
- * Your NumMatrix object will be instantiated and called as such:
- * NumMatrix* obj = new NumMatrix(matrix);
- * int param_1 = obj->sumRegion(row1,col1,row2,col2);
- */
